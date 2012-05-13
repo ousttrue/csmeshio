@@ -21,4 +21,5 @@ configuration {}
 
 include "meshio"
 include "tests"
+include "viewer"
 
