@@ -8,6 +8,7 @@ namespace SlimDXViewer
     public class TopForm : Form
     {
         DXControl _dx;
+        MotionPanel _motion;
 
         private int _mouseX;
         private int _mouseY;
@@ -20,6 +21,10 @@ namespace SlimDXViewer
             _dx=dx;
             _dx.Parent=this;
             _dx.Dock = DockStyle.Fill;
+
+            _motion=new MotionPanel();
+            _motion.Parent=this;
+            _motion.Dock = DockStyle.Right;
 
             Text = "SlimDXViewer";
             Size = new Size(800, 600);
@@ -64,7 +69,7 @@ namespace SlimDXViewer
                 +"|mmd motion(*.vmd)|*.vmd"
                 +"|すべてのファイル(*.*)|*.*"
                 ;
-            ofd.FilterIndex = 1;
+            ofd.FilterIndex = 3;
             ofd.Title = "open model file";
             ofd.RestoreDirectory = true;
             ofd.CheckFileExists = true;
@@ -81,6 +86,7 @@ namespace SlimDXViewer
 			}
 			else if(path.ToLower().EndsWith(".vmd")){
 				var vmd=meshio.Vmd.Loader.loadFromPath(path);
+                _motion.Load(vmd);
 			}
 			else{
 				MessageBox.Show(
